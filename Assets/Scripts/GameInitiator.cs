@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class GameInitiatorScript : MonoBehaviour
@@ -17,7 +16,5 @@ public class GameInitiatorScript : MonoBehaviour
     private void BindObjects()
     {
         GameObject lighting = Instantiate(lightingPrefab);
-        GameObject camera = Instantiate(cameraPrefab);
-        GameObject character = Instantiate(characterPrefab);
     }
 }
