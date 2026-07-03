@@ -18,3 +18,4 @@ MonoBehaviour:
   jumpForce: 14
   gravity: -25
   rotationSpeed: 8
+  maxHealth: 80
