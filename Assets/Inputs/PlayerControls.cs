@@ -118,6 +118,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugStatusEffect"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dc40ebee-cf27-4de8-ac4d-07a7f8d3ed36"",
+                    ""expectedControlType"": ""Digital"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugDamage"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""5abe2300-9b78-41cb-8364-451c5ab17526"",
+                    ""expectedControlType"": ""Digital"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -263,6 +281,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f649329a-0d2e-4dd0-8c21-e4b11e9eda60"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugStatusEffect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f01830-1659-462b-99e0-a61f10036ff5"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugDamage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -274,6 +314,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMovement_Look = m_PlayerMovement.FindAction("Look", throwIfNotFound: true);
         m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerMovement_DebugStatusEffect = m_PlayerMovement.FindAction("DebugStatusEffect", throwIfNotFound: true);
+        m_PlayerMovement_DebugDamage = m_PlayerMovement.FindAction("DebugDamage", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -357,6 +399,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Movement;
     private readonly InputAction m_PlayerMovement_Look;
     private readonly InputAction m_PlayerMovement_Jump;
+    private readonly InputAction m_PlayerMovement_DebugStatusEffect;
+    private readonly InputAction m_PlayerMovement_DebugDamage;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player Movement".
     /// </summary>
@@ -380,6 +424,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerMovement/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_PlayerMovement_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/DebugStatusEffect".
+        /// </summary>
+        public InputAction @DebugStatusEffect => m_Wrapper.m_PlayerMovement_DebugStatusEffect;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/DebugDamage".
+        /// </summary>
+        public InputAction @DebugDamage => m_Wrapper.m_PlayerMovement_DebugDamage;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -415,6 +467,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @DebugStatusEffect.started += instance.OnDebugStatusEffect;
+            @DebugStatusEffect.performed += instance.OnDebugStatusEffect;
+            @DebugStatusEffect.canceled += instance.OnDebugStatusEffect;
+            @DebugDamage.started += instance.OnDebugDamage;
+            @DebugDamage.performed += instance.OnDebugDamage;
+            @DebugDamage.canceled += instance.OnDebugDamage;
         }
 
         /// <summary>
@@ -435,6 +493,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @DebugStatusEffect.started -= instance.OnDebugStatusEffect;
+            @DebugStatusEffect.performed -= instance.OnDebugStatusEffect;
+            @DebugStatusEffect.canceled -= instance.OnDebugStatusEffect;
+            @DebugDamage.started -= instance.OnDebugDamage;
+            @DebugDamage.performed -= instance.OnDebugDamage;
+            @DebugDamage.canceled -= instance.OnDebugDamage;
         }
 
         /// <summary>
@@ -496,5 +560,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugStatusEffect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugStatusEffect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugDamage" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugDamage(InputAction.CallbackContext context);
     }
 }

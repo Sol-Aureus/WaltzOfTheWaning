@@ -5,6 +5,12 @@ public class PlayerInputHandler : MonoBehaviour
 {
     private Locomotion locomotion;
 
+    [Header("Debug Testing")]
+    [SerializeField] private StatusEffect testStatusEffect;
+    [SerializeField] private int testStackAmount = 1;
+    [SerializeField] private float testDamageAmount = 10f;
+    [SerializeField] private bool enableDebugTesting;
+
     private void Awake()
     {
         locomotion = GetComponent<Locomotion>();
@@ -28,6 +34,41 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.ReadValue<float>() > 0)
         {
             locomotion.JumpInput();
+        }
+    }
+
+    public void OnTestEffect(InputAction.CallbackContext context)
+    {
+        if (!enableDebugTesting)
+            return;
+
+        if (context.ReadValue<float>() > 0)
+        {
+            if (testStatusEffect != null)
+            {
+                // Find the StatusEffectManager on the player and apply the effect
+                if (TryGetComponent<StatusEffectManager>(out StatusEffectManager manager))
+                {
+                    manager.ApplyEffect(testStatusEffect, testStackAmount);
+                    Debug.Log($"Debug applied {testStackAmount} stack(s) of {testStatusEffect.EffectId} to player.");
+                }
+            }
+        }
+    }
+
+    public void OnTestDamage(InputAction.CallbackContext context)
+    {
+        if (!enableDebugTesting)
+            return;
+
+        if (context.ReadValue<float>() > 0)
+        {
+            // Find the StatusEffectManager on the player and apply the effect
+            if (TryGetComponent<Health>(out Health health))
+            {
+                health.TakeDamage(10f);
+                Debug.Log($"Debug applied 10 damage to player.");
+            }
         }
     }
 }

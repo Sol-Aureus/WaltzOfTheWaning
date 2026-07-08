@@ -426,6 +426,8 @@ GameObject:
   - component: {fileID: 1052350579}
   - component: {fileID: 1052350578}
   - component: {fileID: 1052350580}
+  - component: {fileID: 1052350582}
+  - component: {fileID: 1052350581}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -549,6 +551,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3a00d4b6-f3be-4efc-ba87-8f6eda56c90f
     m_ActionName: 'Player Movement/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1052350580}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnTestEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dc40ebee-cf27-4de8-ac4d-07a7f8d3ed36
+    m_ActionName: 'Player Movement/DebugStatusEffect[/Keyboard/h]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1052350580}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnTestDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5abe2300-9b78-41cb-8364-451c5ab17526
+    m_ActionName: 'Player Movement/DebugDamage[/Keyboard/j]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player Movement
@@ -566,14 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608e4c0557b9f9740801075a36693aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterLocomotion
-  movementSpeed: 10
-  groundAcceleration: 50
-  airAcceleration: 25
-  jumpForce: 14
-  gravity: -25
-  rotationSpeed: 10
+  movementData: {fileID: 11400000, guid: 2e21e8ceb56ba474b8a81fcc6c2765ea, type: 2}
   cameraTransform: {fileID: 998486286}
-  characterStatistics: {fileID: 11400000, guid: 8834711c9798db84dac3ec3f528671c8, type: 2}
 --- !u!114 &1052350580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,6 +614,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a375b40b6147a7498e89b2760f34365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
+  testStatusEffect: {fileID: 11400000, guid: 886b8cfa8d85c6c4eadae245f4a0cf2f, type: 2}
+  testStackAmount: 99
+  testDamageAmount: 10
+  enableDebugTesting: 1
+--- !u!114 &1052350581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052350574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9226828eceac99d4192baec16417bb9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectManager
+--- !u!114 &1052350582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052350574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354f52153f55eb84892bf45e60324f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  healthData: {fileID: 11400000, guid: 7a3c5f6382281f84790f4ea47d46946b, type: 2}
 --- !u!1 &1097866221
 GameObject:
   m_ObjectHideFlags: 0
