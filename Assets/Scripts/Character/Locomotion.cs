@@ -14,6 +14,8 @@ public class Locomotion : MonoBehaviour
     private float currentGravity;
     private float currentRotationSpeed;
 
+    private StatusEffectManager statusEffectManager;
+
     private StatModifier MovementSpeedModifier = new StatModifier(0f, 1f);
     private StatModifier AccelerationModifier = new StatModifier(0f, 1f);
     private StatModifier JumpVelocityModifier = new StatModifier(0f, 1f);
@@ -38,6 +40,7 @@ public class Locomotion : MonoBehaviour
 
     private void Update()
     {
+        UpdateModifiers();
         CalculateMoveDirection();
         HandleMovement();
         HandleJump();
@@ -55,6 +58,26 @@ public class Locomotion : MonoBehaviour
         currentJumpVelocity = movementData.GetJumpVelocity;
         currentGravity = movementData.GetGravity;
         currentRotationSpeed = movementData.GetRotationSpeed;
+
+        if (TryGetComponent<StatusEffectManager>(out StatusEffectManager manager))
+        {
+            statusEffectManager = manager;
+        }
+    }
+
+    /// <summary>
+    /// UpdateModifiers grabs the current modifiers from the StatusEffectManager and applies them to the character's movement parameters.
+    /// </summary>
+    private void UpdateModifiers()
+    {
+        if (statusEffectManager != null)
+        {
+            MovementSpeedModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.MovementSpeed);
+            AccelerationModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.Acceleration);
+            JumpVelocityModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.JumpVelocity);
+            GravityModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.Gravity);
+            RotationSpeedModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.RotationSpeed);
+        }
     }
 
     /// <summary>

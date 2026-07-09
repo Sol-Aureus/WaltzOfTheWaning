@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     private int greyHealth;
     private int deathHealth;
 
+    private StatusEffectManager statusEffectManager;
     private StatModifier DamageResistanceModifier = new StatModifier(0f, 1f);
 
     private void Awake()
@@ -21,8 +22,23 @@ public class Health : MonoBehaviour
         currentHealth = healthData.GetMaxHealth;
         greyHealth = healthData.GetMaxHealth;
         deathHealth = 0;
+
+        if (TryGetComponent<StatusEffectManager>(out StatusEffectManager manager))
+        {
+            statusEffectManager = manager;
+        }
     }
 
+    /// <summary>
+    /// UpdateModifiers grabs the current modifiers from the StatusEffectManager and applies them to the character's movement parameters.
+    /// </summary>
+    private void UpdateModifiers()
+    {
+        if (statusEffectManager != null)
+        {
+            DamageResistanceModifier = statusEffectManager.GetFinalModifier(CharacterAttribute.DamageResistance);
+        }
+    }
 
     /// <summary>
     /// TakeDamage applies damage to the character's health, randomly rounding to an integer value. Grey health is also reduced by a fraction of the damage taken. The damage is modified by the character's damage taken multiplier. Returns if this damage kills the character.
@@ -30,6 +46,7 @@ public class Health : MonoBehaviour
     /// <param name="damage">The amount of damage to apply to the character's health.</param>
     public bool TakeDamage(float damage)
     {
+        UpdateModifiers();
         float damageToTake = (damage - DamageResistanceModifier.FlatBonus) / DamageResistanceModifier.MultiplierBonus;
         int effectiveDamage = Mathf.FloorToInt(damageToTake);
         int effectiveGreyDamage = Mathf.FloorToInt(damageToTake / 10);

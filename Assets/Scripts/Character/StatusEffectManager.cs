@@ -51,6 +51,8 @@ public class StatusEffectManager : MonoBehaviour
     private Dictionary<CharacterAttribute, Dictionary<string, StatModifier>> masterModifiers
         = new Dictionary<CharacterAttribute, Dictionary<string, StatModifier>>();
 
+    private Dictionary<CharacterAttribute, StatModifier> cachedFinalModifiers = new Dictionary<CharacterAttribute, StatModifier>();
+
     /// <summary>
     /// SetAttributeModifier allows a status effect to register its specific modifier for a given <see cref="CharacterAttribute"/>. It uses the source ID (typically the status effect's unique identifier) to ensure that multiple effects can modify the same attribute without conflict. After setting the modifier, it recalculates and applies the final aggregated modifier for that attribute.
     /// </summary>
@@ -106,37 +108,27 @@ public class StatusEffectManager : MonoBehaviour
             }
         }
 
-        switch (attribute)
+        if (cachedFinalModifiers.ContainsKey(attribute))
         {
-            case CharacterAttribute.MovementSpeed:
-                if (TryGetComponent<Locomotion>(out Locomotion locomotion))
-                    locomotion.SetMovementSpeedModifier(finalModifier);
-                break;
-
-            case CharacterAttribute.Acceleration:
-                if (TryGetComponent<Locomotion>(out Locomotion locomotion2))
-                    locomotion2.SetAccelerationModifier(finalModifier);
-                break;
-
-            case CharacterAttribute.Gravity:
-                if (TryGetComponent<Locomotion>(out Locomotion locomotion3))
-                    locomotion3.SetGravityModifier(finalModifier);
-                break;
-
-            case CharacterAttribute.JumpVelocity:
-                if (TryGetComponent<Locomotion>(out Locomotion locomotion4))
-                    locomotion4.SetJumpVelocityModifier(finalModifier);
-                break;
-
-            case CharacterAttribute.RotationSpeed:
-                if (TryGetComponent<Locomotion>(out Locomotion locomotion5))
-                    locomotion5.SetRotationSpeedModifier(finalModifier);
-                break;
-
-            case CharacterAttribute.DamageResistance:
-                if (TryGetComponent<Health>(out Health health))
-                    health.SetDamageResistanceModifier(finalModifier);
-                break;
+            cachedFinalModifiers[attribute] = finalModifier;
         }
+        else
+        {
+            cachedFinalModifiers.Add(attribute, finalModifier);
+        }
+    }
+
+    /// <summary>
+    /// GetFinalModifier retrieves the final aggregated <see cref="StatModifier"/> for a specific <see cref="CharacterAttribute"/>. If no modifiers are currently applied for that attribute, it returns a default modifier indicating no change (0 flat bonus and 1 multiplier).
+    /// </summary>
+    /// <param name="attribute">The <see cref="CharacterAttribute"/> for which to retrieve the final modifier.</param>
+    /// <returns></returns>
+    public StatModifier GetFinalModifier(CharacterAttribute attribute)
+    {
+        if (cachedFinalModifiers.TryGetValue(attribute, out StatModifier modifier))
+        {
+            return modifier;
+        }
+        return new StatModifier(0f, 1f); // Default: no change
     }
 }
