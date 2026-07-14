@@ -114,7 +114,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3a00d4b6-f3be-4efc-ba87-8f6eda56c90f"",
-                    ""expectedControlType"": ""Digital"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -133,6 +133,51 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""5abe2300-9b78-41cb-8364-451c5ab17526"",
                     ""expectedControlType"": ""Digital"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AbilityPrimary"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ec75e1a2-a12f-4f0c-b86d-6a870dc3feda"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability1"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""8c9e41fb-4e0c-434e-ba9b-57000c3b7a36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability2"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dce7f1ce-84fc-4a1a-bb09-8846f3ead985"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability3"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""5a9001ca-9851-47fb-a119-ab22b05e64e1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability4"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""2636e60c-3213-495a-820a-13194a1ea297"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -303,6 +348,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugDamage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afba6d87-2c18-46ad-bf86-c68d38b05c71"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AbilityPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d7b46ad-03db-4479-a76e-b389842fc28c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bebc99d-d369-497e-baef-b9d465060f6f"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7720a34-5e31-4b1d-9f00-eac6121d3565"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55490239-38ea-4b77-980a-5e966432cf39"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -316,6 +416,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMovement_DebugStatusEffect = m_PlayerMovement.FindAction("DebugStatusEffect", throwIfNotFound: true);
         m_PlayerMovement_DebugDamage = m_PlayerMovement.FindAction("DebugDamage", throwIfNotFound: true);
+        m_PlayerMovement_AbilityPrimary = m_PlayerMovement.FindAction("AbilityPrimary", throwIfNotFound: true);
+        m_PlayerMovement_Ability1 = m_PlayerMovement.FindAction("Ability1", throwIfNotFound: true);
+        m_PlayerMovement_Ability2 = m_PlayerMovement.FindAction("Ability2", throwIfNotFound: true);
+        m_PlayerMovement_Ability3 = m_PlayerMovement.FindAction("Ability3", throwIfNotFound: true);
+        m_PlayerMovement_Ability4 = m_PlayerMovement.FindAction("Ability4", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -401,6 +506,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Jump;
     private readonly InputAction m_PlayerMovement_DebugStatusEffect;
     private readonly InputAction m_PlayerMovement_DebugDamage;
+    private readonly InputAction m_PlayerMovement_AbilityPrimary;
+    private readonly InputAction m_PlayerMovement_Ability1;
+    private readonly InputAction m_PlayerMovement_Ability2;
+    private readonly InputAction m_PlayerMovement_Ability3;
+    private readonly InputAction m_PlayerMovement_Ability4;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player Movement".
     /// </summary>
@@ -432,6 +542,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerMovement/DebugDamage".
         /// </summary>
         public InputAction @DebugDamage => m_Wrapper.m_PlayerMovement_DebugDamage;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/AbilityPrimary".
+        /// </summary>
+        public InputAction @AbilityPrimary => m_Wrapper.m_PlayerMovement_AbilityPrimary;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/Ability1".
+        /// </summary>
+        public InputAction @Ability1 => m_Wrapper.m_PlayerMovement_Ability1;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/Ability2".
+        /// </summary>
+        public InputAction @Ability2 => m_Wrapper.m_PlayerMovement_Ability2;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/Ability3".
+        /// </summary>
+        public InputAction @Ability3 => m_Wrapper.m_PlayerMovement_Ability3;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovement/Ability4".
+        /// </summary>
+        public InputAction @Ability4 => m_Wrapper.m_PlayerMovement_Ability4;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -473,6 +603,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugDamage.started += instance.OnDebugDamage;
             @DebugDamage.performed += instance.OnDebugDamage;
             @DebugDamage.canceled += instance.OnDebugDamage;
+            @AbilityPrimary.started += instance.OnAbilityPrimary;
+            @AbilityPrimary.performed += instance.OnAbilityPrimary;
+            @AbilityPrimary.canceled += instance.OnAbilityPrimary;
+            @Ability1.started += instance.OnAbility1;
+            @Ability1.performed += instance.OnAbility1;
+            @Ability1.canceled += instance.OnAbility1;
+            @Ability2.started += instance.OnAbility2;
+            @Ability2.performed += instance.OnAbility2;
+            @Ability2.canceled += instance.OnAbility2;
+            @Ability3.started += instance.OnAbility3;
+            @Ability3.performed += instance.OnAbility3;
+            @Ability3.canceled += instance.OnAbility3;
+            @Ability4.started += instance.OnAbility4;
+            @Ability4.performed += instance.OnAbility4;
+            @Ability4.canceled += instance.OnAbility4;
         }
 
         /// <summary>
@@ -499,6 +644,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugDamage.started -= instance.OnDebugDamage;
             @DebugDamage.performed -= instance.OnDebugDamage;
             @DebugDamage.canceled -= instance.OnDebugDamage;
+            @AbilityPrimary.started -= instance.OnAbilityPrimary;
+            @AbilityPrimary.performed -= instance.OnAbilityPrimary;
+            @AbilityPrimary.canceled -= instance.OnAbilityPrimary;
+            @Ability1.started -= instance.OnAbility1;
+            @Ability1.performed -= instance.OnAbility1;
+            @Ability1.canceled -= instance.OnAbility1;
+            @Ability2.started -= instance.OnAbility2;
+            @Ability2.performed -= instance.OnAbility2;
+            @Ability2.canceled -= instance.OnAbility2;
+            @Ability3.started -= instance.OnAbility3;
+            @Ability3.performed -= instance.OnAbility3;
+            @Ability3.canceled -= instance.OnAbility3;
+            @Ability4.started -= instance.OnAbility4;
+            @Ability4.performed -= instance.OnAbility4;
+            @Ability4.canceled -= instance.OnAbility4;
         }
 
         /// <summary>
@@ -574,5 +734,40 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDebugDamage(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AbilityPrimary" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbilityPrimary(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Ability1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbility1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Ability2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbility2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Ability3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbility3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Ability4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbility4(InputAction.CallbackContext context);
     }
 }

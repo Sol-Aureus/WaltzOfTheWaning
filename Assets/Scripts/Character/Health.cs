@@ -27,6 +27,10 @@ public class Health : MonoBehaviour
         {
             statusEffectManager = manager;
         }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] Health is missing a StatusEffectManager on its hierarchy!", this);
+        }
     }
 
     /// <summary>
@@ -47,7 +51,7 @@ public class Health : MonoBehaviour
     public bool TakeDamage(float damage)
     {
         UpdateModifiers();
-        float damageToTake = (damage - DamageResistanceModifier.FlatBonus) / DamageResistanceModifier.MultiplierBonus;
+        float damageToTake = (damage + DamageResistanceModifier.FlatBonus) * DamageResistanceModifier.MultiplierBonus;
         int effectiveDamage = Mathf.FloorToInt(damageToTake);
         int effectiveGreyDamage = Mathf.FloorToInt(damageToTake / 10);
         float randomDamage = damage - effectiveDamage;

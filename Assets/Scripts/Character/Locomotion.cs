@@ -22,15 +22,29 @@ public class Locomotion : MonoBehaviour
     private StatModifier GravityModifier = new StatModifier(0f, 1f);
     private StatModifier RotationSpeedModifier = new StatModifier(0f, 1f);
 
+    private enum MovementState
+    {
+        Grounded,
+        Sliding,
+        Falling
+    }
+
+    private MovementState currentState;
 
     private Vector2 movementInput;
     private Vector3 moveDirection;
+    private Vector3 groundNormal;
+    private float slopeAngle;
     
     private Vector3 currentVelocity;
     private float verticalVelocity;
+    private float currentSlideSpeed;
+    private float currentLateralSpeed;
 
     private float coyoteTimer = 0;
     private float jumpBufferTimer = 0;
+    private bool isJumping = false;
+    private bool isSliding = false;
 
     private void Awake()
     {
@@ -41,10 +55,39 @@ public class Locomotion : MonoBehaviour
     private void Update()
     {
         UpdateModifiers();
-        CalculateMoveDirection();
-        HandleMovement();
         HandleJump();
+        CalculateMoveDirection();
+        UpdateMovementState();
+        HandleMovement();
         CountDownTimers();
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        groundNormal = hit.normal;
+        Debug.DrawRay(gameObject.transform.position + new Vector3 (0, 0.25f, 0), groundNormal * 2f, new Color (0,1,0));
+        Debug.DrawRay(gameObject.transform.position + new Vector3(0, 0.25f, 0), Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized * 2f, new Color(0, 0, 1));
+    }
+
+    /// <summary>
+    /// UpdateMovementState sets the charcter's current state
+    /// </summary>
+    private void UpdateMovementState()
+    {
+        slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+
+        if (!characterController.isGrounded || isJumping)
+        {
+            currentState = MovementState.Falling;
+        }
+        else if (slopeAngle >= characterController.slopeLimit - 0.1f)
+        {
+            currentState = MovementState.Sliding;
+        }
+        else
+        {
+            currentState = MovementState.Grounded;
+        }
     }
 
     /// <summary>
@@ -62,6 +105,10 @@ public class Locomotion : MonoBehaviour
         if (TryGetComponent<StatusEffectManager>(out StatusEffectManager manager))
         {
             statusEffectManager = manager;
+        }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] Health is missing a StatusEffectManager on its hierarchy!", this);
         }
     }
 
@@ -110,31 +157,115 @@ public class Locomotion : MonoBehaviour
     /// </summary>
     private void HandleMovement()
     {
-        // 1. Calculate the velocity the player wants to achieve
-        Vector3 targetVelocity = moveDirection * (currentMovementSpeed + MovementSpeedModifier.FlatBonus) * MovementSpeedModifier.MultiplierBonus;
-
-        // 2. Select acceleration based on ground status
-        float acceleration = characterController.isGrounded ? (currentGroundAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus : (currentAirAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus;
-
-        // 3. Smoothly accelerate currentVelocity towards targetVelocity
-        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
-
-        // 4. Combine horizontal acceleration with vertical physics (Gravity placeholder)
+        CalculateHorizontalVelocity();
         Vector3 finalMotion = currentVelocity;
 
-        if (!characterController.isGrounded)
+        // Modifies the motion based on the current MovementState
+        switch (currentState)
         {
-            verticalVelocity -= (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus * Time.deltaTime;
+            case MovementState.Grounded:
+                isSliding = false;
+                ApplyGroundState();
+                finalMotion.y = verticalVelocity;
+                break;
+
+            case MovementState.Sliding:
+                Vector3 downSlopeDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
+                if (!isSliding)
+                {
+                    currentSlideSpeed = 0;
+                    isSliding = true;
+                }
+
+                Vector3 slideForce = CalculateSlideVelcocity(downSlopeDirection);
+                Vector3 lateralMovement = CalculateLateralSlideVelocity(downSlopeDirection);
+
+                finalMotion = slideForce + lateralMovement;
+                verticalVelocity = finalMotion.y;
+                break;
+
+            case MovementState.Falling:
+                isSliding = false;
+                ApplyGravity();
+                finalMotion.y = verticalVelocity;
+                break;
+        }
+
+        characterController.Move(finalMotion * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// CalculateHorizontalVelocity uses the movement direction and acceleration to change the character's horizontal velocity
+    /// </summary>
+    private void CalculateHorizontalVelocity()
+    {
+        Vector3 targetVelocity = moveDirection * (currentMovementSpeed + MovementSpeedModifier.FlatBonus) * MovementSpeedModifier.MultiplierBonus;
+
+        float acceleration;
+        if (currentState == MovementState.Grounded) {
+            acceleration = (currentGroundAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus;
         }
         else
         {
-            coyoteTimer = 0.2f;
-        }
+            acceleration = (currentAirAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus;
+        } 
 
-        finalMotion.y = verticalVelocity;
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
+    }
 
-        // 5. Move the controller using our calculated velocity
-        characterController.Move(finalMotion * Time.deltaTime);
+    /// <summary>
+    /// ApplyGroundState resets the coyote timer and applies a constant grounding force to the character
+    /// </summary>
+    private void ApplyGroundState()
+    {
+        coyoteTimer = 0.2f;
+        verticalVelocity = -(currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus;
+    }
+
+    /// <summary>
+    /// CalculateSlideVelcocity uses the angle of the slope to determine the direction and magnitude of gravity to apply
+    /// </summary>
+    /// <param name="slopeDirection">The tangent vector down the slope</param>
+    /// <returns>The slide velocity</returns>
+    private Vector3 CalculateSlideVelcocity(Vector3 slopeDirection)
+    {
+        float slopeRadians = slopeAngle * Mathf.Deg2Rad;
+        float angleGravityMultiplier = Mathf.Sin(slopeRadians);
+        currentSlideSpeed += (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus * angleGravityMultiplier * Time.deltaTime;
+
+        Vector3 slideForce = slopeDirection * currentSlideSpeed;
+        Vector3 downwardStickyForce = Vector3.down * (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus;
+
+        return slideForce + downwardStickyForce;
+    }
+
+    /// <summary>
+    /// CalculateLateralSlideVelocity uses the character's input to move along the 
+    /// </summary>
+    /// <param name="slopeDirection">The tangent vector down the slope</param>
+    /// <returns>The lateral slide velocity</returns>
+    private Vector3 CalculateLateralSlideVelocity(Vector3 slopeDirection)
+    {
+        Vector3 lateralDir = Vector3.Cross(slopeDirection, groundNormal).normalized;
+
+        float lateralInput = Vector3.Dot(moveDirection, lateralDir);
+
+        float targetLateralSpeed = lateralInput * (currentMovementSpeed + MovementSpeedModifier.FlatBonus) * MovementSpeedModifier.MultiplierBonus;
+
+        currentLateralSpeed = Mathf.MoveTowards(currentLateralSpeed, targetLateralSpeed, (currentAirAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus * Time.deltaTime);
+
+        Vector3 lateralMovement = lateralDir * currentLateralSpeed;
+
+        return lateralMovement;
+    }
+
+    /// <summary>
+    /// ApplyGravity causes the character to fall
+    /// </summary>
+    private void ApplyGravity()
+    {
+        verticalVelocity -= (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus * Time.deltaTime;
+        isJumping = false;
     }
 
     /// <summary>
@@ -150,6 +281,7 @@ public class Locomotion : MonoBehaviour
             verticalVelocity = (currentJumpVelocity + JumpVelocityModifier.FlatBonus) * JumpVelocityModifier.MultiplierBonus;
             jumpBufferTimer = 0;
             coyoteTimer = 0;
+            isJumping = true;
         }
     }
 
@@ -177,50 +309,5 @@ public class Locomotion : MonoBehaviour
     public void JumpInput()
     {
         jumpBufferTimer = 0.2f;
-    }
-
-    /// <summary>
-    /// SetMovementSpeedModifier applies a <see cref="StatModifier"/> to the character's movement speed, allowing for both flat and multiplier bonuses to be set.
-    /// </summary>
-    /// <param name="modifier">The <see cref="StatModifier"/> containing the flat and multiplier bonuses to apply to the movement speed.</param>
-    public void SetMovementSpeedModifier(StatModifier modifier)
-    {
-        MovementSpeedModifier = modifier;
-    }
-
-    /// <summary>
-    /// SetAccelerationModifier applies a <see cref="StatModifier"/> to the character's acceleration (ground and air).
-    /// </summary>
-    /// <param name="modifier">The <see cref="StatModifier"/> containing the flat and multiplier bonuses to apply to acceleration.</param>
-    public void SetAccelerationModifier(StatModifier modifier)
-    {
-        AccelerationModifier = modifier;
-    }
-
-    /// <summary>
-    /// SetJumpVelocityModifier applies a <see cref="StatModifier"/> to the character's jump velocity.
-    /// </summary>
-    /// <param name="modifier">The <see cref="StatModifier"/> containing the flat and multiplier bonuses to apply to jump velocity.</param>
-    public void SetJumpVelocityModifier(StatModifier modifier)
-    {
-        JumpVelocityModifier = modifier;
-    }
-
-    /// <summary>
-    /// SetGravityModifier applies a <see cref="StatModifier"/> to the character's gravity.
-    /// </summary>
-    /// <param name="modifier">The <see cref="StatModifier"/> containing the flat and multiplier bonuses to apply to gravity.</param>
-    public void SetGravityModifier(StatModifier modifier)
-    {
-        GravityModifier = modifier;
-    }
-
-    /// <summary>
-    /// SetRotationSpeedModifier applies a <see cref="StatModifier"/> to the character's rotation speed.
-    /// </summary>
-    /// <param name="modifier">The <see cref="StatModifier"/> containing the flat and multiplier bonuses to apply to rotation speed.</param>
-    public void SetRotationSpeedModifier(StatModifier modifier)
-    {
-        RotationSpeedModifier = modifier;
     }
 }

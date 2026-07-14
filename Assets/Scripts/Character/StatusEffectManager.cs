@@ -14,9 +14,9 @@ public class StatusEffectManager : MonoBehaviour
         if (!activeEffects.TryGetValue(blueprint.EffectId, out ActiveEffect targetEffect))
         {
             // Brand new effect group setup
-            targetEffect = new ActiveEffect(blueprint, gameObject);
+            targetEffect = new ActiveEffect(blueprint, this);
             activeEffects.Add(blueprint.EffectId, targetEffect);
-            blueprint.OnApply(gameObject); // Run setup logic once
+            blueprint.OnApply(this); // Run setup logic once
         }
 
         // Whether it was just created or already existed, add the correct amount of stacks!
@@ -35,7 +35,7 @@ public class StatusEffectManager : MonoBehaviour
 
             if (effect.IsExpired)
             {
-                effect.Blueprint.OnRemove(gameObject); // Run cleanup logic
+                effect.Blueprint.OnRemove(this); // Run cleanup logic
                 effectsToRemove.Add(kvp.Key); // Mark for deletion
             }
         }

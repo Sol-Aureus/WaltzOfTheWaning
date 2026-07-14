@@ -10,12 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2b010f4ec5cc1e41a1251275974678f, type: 3}
-  m_Name: CharacterStatistics
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterStatistics
-  movementSpeed: 10
-  groundAcceleration: 50
-  airAcceleration: 25
-  jumpForce: 14
-  gravity: -25
-  rotationSpeed: 8
-  maxHealth: 80
+  m_Name: SampleAbilitySetData
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySetData
+  abilitySet:
+  - {fileID: 11400000, guid: 269920602eade2e498d7e098d3a353bd, type: 2}

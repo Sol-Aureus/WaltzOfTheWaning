@@ -15,12 +15,12 @@ public class ActiveEffect
 
     // Internal ticker to know when to run OnTick (e.g., every 0.33 seconds)
     private float tickTimer;
-    private GameObject targetCharacter;
+    private StatusEffectManager targetManager;
 
-    public ActiveEffect(StatusEffect blueprint, GameObject target)
+    public ActiveEffect(StatusEffect blueprint, StatusEffectManager manager)
     {
         Blueprint = blueprint;
-        targetCharacter = target;
+        targetManager = manager;
         CurrentStacks = 0;
         tickTimer = 0f;
     }
@@ -41,7 +41,7 @@ public class ActiveEffect
             stackSize = Blueprint.maxStacks - CurrentStacks;
         }
         CurrentStacks += stackSize;
-        Blueprint.OnStackCountChanged(targetCharacter, CurrentStacks);
+        Blueprint.OnStackCountChanged(targetManager, CurrentStacks);
 
         if (Blueprint.stackingBehavior == StackingBehavior.IndividualTimeouts)
         {
@@ -71,7 +71,7 @@ public class ActiveEffect
             if (tickTimer >= Blueprint.tickIntervalSeconds)
             {
                 // Trigger the actual gameplay logic rule defined in your blueprint!
-                Blueprint.OnTick(targetCharacter, tickTimer, CurrentStacks);
+                Blueprint.OnTick(targetManager, tickTimer, CurrentStacks);
                 tickTimer -= Blueprint.tickIntervalSeconds; // Reset tick intervals
             }
         }
@@ -79,6 +79,7 @@ public class ActiveEffect
         // 2. MANAGE EXPIRATION CLOCKS
         if (Blueprint.stackingBehavior == StackingBehavior.IndividualTimeouts)
         {
+            int previoiusStacks = CurrentStacks;
             // Loop backward through the list so we can safely remove elements while iterating
             for (int i = individualTimers.Count - 1; i >= 0; i--)
             {
@@ -87,8 +88,11 @@ public class ActiveEffect
                 {
                     individualTimers.RemoveAt(i);
                     CurrentStacks--; // This individual stack timed out!
-                    Blueprint.OnStackCountChanged(targetCharacter, CurrentStacks);
                 }
+            }
+            if (previoiusStacks != CurrentStacks && CurrentStacks > 0)
+            {
+                Blueprint.OnStackCountChanged(targetManager, CurrentStacks);
             }
         }
         else // Master timer approach
@@ -105,14 +109,13 @@ public class ActiveEffect
                         if (CurrentStacks > 0)
                         {
                             masterTimer = Blueprint.maxDurationSeconds; // Reset clock for next decay
+                            Blueprint.OnStackCountChanged(targetManager, CurrentStacks);
                         }
                     }
                     else
                     {
                         CurrentStacks = 0; // Wipe all stacks instantly if decrement is 0
                     }
-
-                    Blueprint.OnStackCountChanged(targetCharacter, CurrentStacks);
                 }
             }
         }

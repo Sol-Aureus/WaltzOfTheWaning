@@ -63,7 +63,7 @@ public class CameraController : MonoBehaviour
         return desiredCameraPosition;
     }
 
-    public void SetLookInput(InputAction.CallbackContext context)
+    public void OnLook(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
     }

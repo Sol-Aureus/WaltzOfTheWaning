@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerInputHandler : MonoBehaviour
 {
     private Locomotion locomotion;
+    private AbilityHandler abilityHandler;
 
     [Header("Debug Testing")]
     [SerializeField] private StatusEffect testStatusEffect;
@@ -13,7 +15,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        locomotion = GetComponent<Locomotion>();
+        if (gameObject.TryGetComponent<Locomotion>(out Locomotion motion))
+        {
+            locomotion = motion;
+        }
+        if (gameObject.TryGetComponent<AbilityHandler>(out AbilityHandler handler))
+        {
+            abilityHandler = handler;
+        }
     }
 
     /// <summary>
@@ -22,7 +31,10 @@ public class PlayerInputHandler : MonoBehaviour
     /// <param name="context">The context of the input action, which contains information about the input event.</param>
     public void OnMove(InputAction.CallbackContext context)
     {
-        locomotion.SetMovementInput(context.ReadValue<Vector2>());
+        if (locomotion != null)
+        {
+            locomotion.SetMovementInput(context.ReadValue<Vector2>());
+        }
     }
 
     /// <summary>
@@ -31,9 +43,49 @@ public class PlayerInputHandler : MonoBehaviour
     /// <param name="context">The context of the input action, which contains information about the input event.</param>
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.ReadValue<float>() > 0)
+        if (context.ReadValue<float>() > 0 && locomotion != null)
         {
             locomotion.JumpInput();
+        }
+    }
+
+    public void OnAbilityPrimary(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0 && abilityHandler != null)
+        {
+            abilityHandler.ActivateAbility(0);
+        }
+    }
+
+    public void OnAbility1(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0 && abilityHandler != null)
+        {
+            abilityHandler.ActivateAbility(1);
+        }
+    }
+
+    public void OnAbility2(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0 && abilityHandler != null)
+        {
+            abilityHandler.ActivateAbility(2);
+        }
+    }
+
+    public void OnAbility3(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0 && abilityHandler != null)
+        {
+            abilityHandler.ActivateAbility(3);
+        }
+    }
+
+    public void OnAbility4(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0 && abilityHandler != null)
+        {
+            abilityHandler.ActivateAbility(4);
         }
     }
 

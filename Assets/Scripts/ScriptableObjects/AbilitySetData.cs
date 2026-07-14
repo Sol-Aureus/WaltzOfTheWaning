@@ -4,5 +4,7 @@ using UnityEngine;
 public class AbilitySetData : ScriptableObject
 {
     [Header("Ability Settings")]
-    [SerializeField] private CharacterAbilities[] abilitySets;
+    [SerializeField] private Ability[] abilitySet;
+
+    public Ability[] GetAbility => abilitySet;
 }

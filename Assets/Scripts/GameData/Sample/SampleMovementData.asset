@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementData
   movementSpeed: 12
   groundAcceleration: 60
-  airAcceleration: 30
-  jumpVelocity: 14
+  airAcceleration: 20
+  jumpVelocity: 40
   gravity: 24
   rotationSpeed: 8

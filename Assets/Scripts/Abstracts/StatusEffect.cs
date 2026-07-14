@@ -16,8 +16,8 @@ public abstract class StatusEffect : ScriptableObject
     public StackingBehavior stackingBehavior { get; protected set; }
     public int decrementStacksOnTimeout { get; protected set; } // If 0, then the effect will remove all stacks on timeout
 
-    public virtual void OnApply(GameObject target) { }
-    public virtual void OnStackCountChanged(GameObject target, int currentStacks) { }
-    public virtual void OnTick(GameObject target, float deltaTime, int currentStacks) { }
-    public virtual void OnRemove(GameObject target) { }
+    public virtual void OnApply(StatusEffectManager manager) { }
+    public virtual void OnStackCountChanged(StatusEffectManager manager, int currentStacks) { }
+    public virtual void OnTick(StatusEffectManager manager, float deltaTime, int currentStacks) { }
+    public virtual void OnRemove(StatusEffectManager manager) { }
 }

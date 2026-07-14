@@ -28,7 +28,7 @@
                     "name": "Jump",
                     "type": "PassThrough",
                     "id": "3a00d4b6-f3be-4efc-ba87-8f6eda56c90f",
-                    "expectedControlType": "Digital",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -47,6 +47,51 @@
                     "type": "PassThrough",
                     "id": "5abe2300-9b78-41cb-8364-451c5ab17526",
                     "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AbilityPrimary",
+                    "type": "PassThrough",
+                    "id": "ec75e1a2-a12f-4f0c-b86d-6a870dc3feda",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability1",
+                    "type": "PassThrough",
+                    "id": "8c9e41fb-4e0c-434e-ba9b-57000c3b7a36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability2",
+                    "type": "PassThrough",
+                    "id": "dce7f1ce-84fc-4a1a-bb09-8846f3ead985",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability3",
+                    "type": "PassThrough",
+                    "id": "5a9001ca-9851-47fb-a119-ab22b05e64e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability4",
+                    "type": "PassThrough",
+                    "id": "2636e60c-3213-495a-820a-13194a1ea297",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -215,6 +260,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugDamage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afba6d87-2c18-46ad-bf86-c68d38b05c71",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbilityPrimary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d7b46ad-03db-4479-a76e-b389842fc28c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6bebc99d-d369-497e-baef-b9d465060f6f",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7720a34-5e31-4b1d-9f00-eac6121d3565",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55490239-38ea-4b77-980a-5e966432cf39",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
