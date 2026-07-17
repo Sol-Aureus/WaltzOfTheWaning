@@ -8,11 +8,17 @@ public enum CooldownBehavior
 
 public abstract class Ability : ScriptableObject
 {
+    [field: SerializeField]
     public string AbilityId { get; protected set; }
-    public float cooldownSeconds { get; protected set; } 
+    [field: SerializeField]
+    public float cooldownSeconds { get; protected set; }
+    [field: SerializeField]
     public int soulCost { get; protected set; }
+    [field: SerializeField]
     public float qiThreshold { get; protected set; }
+    [field: SerializeField]
     public CooldownBehavior cooldownBehaviour { get; protected set; }
+
     protected float cooldownTimer { get; set; }
     protected int soulCount { get; set; }
     protected bool canUseAbility { get; set; }

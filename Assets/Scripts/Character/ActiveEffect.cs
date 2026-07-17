@@ -3,17 +3,13 @@ using UnityEngine;
 
 public class ActiveEffect
 {
-    // Reference back to our read-only rulebook
     public StatusEffect Blueprint { get; private set; }
     public int CurrentStacks { get; private set; }
 
-    // Option A: For IndividualTimeouts (The "Scooter" list)
     private List<float> individualTimers = new List<float>();
 
-    // Option B: For Decrement / Refresh behaviors (The "Uber" master clock)
     private float masterTimer;
 
-    // Internal ticker to know when to run OnTick (e.g., every 0.33 seconds)
     private float tickTimer;
     private StatusEffectManager targetManager;
 
@@ -25,6 +21,10 @@ public class ActiveEffect
         tickTimer = 0f;
     }
 
+    /// <summary>
+    /// AddStack increases the number of stacks by the stackSize.
+    /// </summary>
+    /// <param name="stackSize">The number of stacks to add</param>
     public void AddStack(int stackSize)
     {
         if (Blueprint.maxStacks > 0 && CurrentStacks >= Blueprint.maxStacks)
@@ -54,7 +54,6 @@ public class ActiveEffect
         }
         else if (Blueprint.stackingBehavior == StackingBehavior.DecrementOnTimeout)
         {
-            // Only start the clock if this is the very first stack entering the group!
             if (CurrentStacks == 1)
             {
                 masterTimer = Blueprint.maxDurationSeconds;
@@ -62,32 +61,32 @@ public class ActiveEffect
         }
     }
 
+    /// <summary>
+    /// UpdateTimers progresses the tick timer, calling OnTick every time the threshold is reached.
+    /// </summary>
+    /// <param name="deltaTime">The time between calls</param>
     public void UpdateTimers(float deltaTime)
     {
-        // 1. MANAGE ACTION TICKS (e.g. Pyre Fist's Burn interval)
         if (Blueprint.tickIntervalSeconds > 0f && CurrentStacks > 0)
         {
             tickTimer += deltaTime;
             if (tickTimer >= Blueprint.tickIntervalSeconds)
             {
-                // Trigger the actual gameplay logic rule defined in your blueprint!
                 Blueprint.OnTick(targetManager, tickTimer, CurrentStacks);
-                tickTimer -= Blueprint.tickIntervalSeconds; // Reset tick intervals
+                tickTimer -= Blueprint.tickIntervalSeconds;
             }
         }
 
-        // 2. MANAGE EXPIRATION CLOCKS
         if (Blueprint.stackingBehavior == StackingBehavior.IndividualTimeouts)
         {
             int previoiusStacks = CurrentStacks;
-            // Loop backward through the list so we can safely remove elements while iterating
             for (int i = individualTimers.Count - 1; i >= 0; i--)
             {
                 individualTimers[i] -= deltaTime;
                 if (individualTimers[i] <= 0f)
                 {
                     individualTimers.RemoveAt(i);
-                    CurrentStacks--; // This individual stack timed out!
+                    CurrentStacks--;
                 }
             }
             if (previoiusStacks != CurrentStacks && CurrentStacks > 0)
@@ -95,7 +94,7 @@ public class ActiveEffect
                 Blueprint.OnStackCountChanged(targetManager, CurrentStacks);
             }
         }
-        else // Master timer approach
+        else
         {
             if (CurrentStacks > 0)
             {
@@ -108,13 +107,13 @@ public class ActiveEffect
 
                         if (CurrentStacks > 0)
                         {
-                            masterTimer = Blueprint.maxDurationSeconds; // Reset clock for next decay
+                            masterTimer = Blueprint.maxDurationSeconds;
                             Blueprint.OnStackCountChanged(targetManager, CurrentStacks);
                         }
                     }
                     else
                     {
-                        CurrentStacks = 0; // Wipe all stacks instantly if decrement is 0
+                        CurrentStacks = 0;
                     }
                 }
             }

@@ -15,6 +15,6 @@ MonoBehaviour:
   movementSpeed: 12
   groundAcceleration: 60
   airAcceleration: 20
-  jumpVelocity: 40
+  jumpVelocity: 14
   gravity: 24
   rotationSpeed: 8

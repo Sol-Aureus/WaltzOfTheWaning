@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8552c9294036fec44ad0b0580e08d77e, type: 3}
   m_Name: SlownessEffect
   m_EditorClassIdentifier: Assembly-CSharp::SlownessEffect
+  <EffectId>k__BackingField: Slowness
+  <maxStacks>k__BackingField: 6
+  <maxDurationSeconds>k__BackingField: 1.5
+  <tickIntervalSeconds>k__BackingField: 0
+  <stackingBehavior>k__BackingField: 1
+  <decrementStacksOnTimeout>k__BackingField: 2

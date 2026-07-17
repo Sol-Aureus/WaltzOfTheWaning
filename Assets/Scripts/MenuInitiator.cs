@@ -2,15 +2,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameInitiator : MonoBehaviour
+public class MenuInitiator : MonoBehaviour
 {
     [Header("Managers")]
+    [SerializeField] private Camera camera;
     [SerializeField] private Light lighting;
 
     [Header("UI")]
 
     [Header("Game Objects")]
-    [SerializeField] private GameObject playerCharacter;
+    [SerializeField] private GameObject[] playerCharacters;
+    [SerializeField] private GameObject[] playerModels;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private async Awaitable Start()
@@ -22,18 +24,28 @@ public class GameInitiator : MonoBehaviour
 
     private void BindObjects()
     {
+        camera = Instantiate(camera);
         lighting = Instantiate(lighting);
     }
 
     private async Awaitable CreateObjects()
     {
-        SceneManager.LoadScene("LevelScene", LoadSceneMode.Additive);
-        playerCharacter = Instantiate(playerCharacter);
+        SceneManager.LoadScene("CharacterSelectScene", LoadSceneMode.Additive);
+
+        for (int i = 0; i < playerModels.Length; i++)
+        {
+            playerModels[i] = Instantiate(playerModels[i]);
+        }
     }
 
     private void PrepareGame()
     {
         lighting.enabled = true;
-        playerCharacter.transform.position = Vector3.zero;
+
+        for (int i = 0; i < playerModels.Length; i++)
+        {
+            playerModels[i].transform.position = Vector3.zero;
+            playerModels[i].SetActive(false);
+        }
     }
 }

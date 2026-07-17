@@ -19,9 +19,18 @@ public class PlayerInputHandler : MonoBehaviour
         {
             locomotion = motion;
         }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] PlayerInputHandler is missing a Locomotion on its hierarchy!", this);
+        }
+
         if (gameObject.TryGetComponent<AbilityHandler>(out AbilityHandler handler))
         {
             abilityHandler = handler;
+        }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] PlayerInputHandler is missing an AbilityHandler on its hierarchy!", this);
         }
     }
 

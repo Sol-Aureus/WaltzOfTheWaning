@@ -80,7 +80,7 @@ public class Locomotion : MonoBehaviour
         {
             currentState = MovementState.Falling;
         }
-        else if (slopeAngle >= characterController.slopeLimit - 0.1f)
+        else if (slopeAngle >= characterController.slopeLimit - 0.1f && slopeAngle <= 89.9f)
         {
             currentState = MovementState.Sliding;
         }

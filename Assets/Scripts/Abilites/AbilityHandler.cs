@@ -3,7 +3,8 @@ using UnityEngine;
 public class AbilityHandler : MonoBehaviour
 {
 
-    [SerializeField] private AbilitySetData[] abilitySets;
+    [SerializeField] private AbilitySetData[] sourceAbilitySets;
+    private Ability[][] runtimeAbilitySets;
     private int currentSet;
     private bool isCooldown;
     private bool isTicking;
@@ -22,6 +23,22 @@ public class AbilityHandler : MonoBehaviour
             Debug.LogError($"[{gameObject.name}] AbilityHandler is missing a StatusEffectManager on its hierarchy!", this);
         }
 
+        if (sourceAbilitySets != null)
+        {
+            runtimeAbilitySets = new Ability[sourceAbilitySets.Length][];
+
+            for (int i = 0; i < sourceAbilitySets.Length; i++)
+            {
+                int abilityCount = sourceAbilitySets[i].GetAbility.Length;
+                runtimeAbilitySets[i] = new Ability[abilityCount];
+
+                for (int j = 0; j < abilityCount; j++)
+                {
+                    runtimeAbilitySets[i][j] = Instantiate(sourceAbilitySets[i].GetAbility[j]);
+                }
+            }
+        }
+
         currentSet = 0;
         isCooldown = true;
         isTicking = true;
@@ -29,33 +46,32 @@ public class AbilityHandler : MonoBehaviour
 
     private void Update()
     {
-        if (isCooldown)
+        if (runtimeAbilitySets != null)
         {
-            UpdateModifiers();
-            float clockSpeed = Time.deltaTime * ((1f + CooldownModifier.FlatBonus) * CooldownModifier.MultiplierBonus);
-
-            foreach (AbilitySetData set in abilitySets)
+            if (isCooldown)
             {
-                if (set != null)
+                UpdateModifiers();
+                float clockSpeed = Time.deltaTime * ((1f + CooldownModifier.FlatBonus) * CooldownModifier.MultiplierBonus);
+                for (int i = 0; i < runtimeAbilitySets.Length; i++)
                 {
-                    foreach (Ability ability in set.GetAbility)
+                    for (int j = 0; j < runtimeAbilitySets[i].Length; j++)
                     {
-                        if (ability != null)
-                        {
-                            ability.TickCooldown(clockSpeed);
-                        }
+                        runtimeAbilitySets[i][j].TickCooldown(clockSpeed);
                     }
                 }
             }
-        }
-
-        if (isTicking)
-        {
-            foreach(Ability ability in abilitySets[currentSet].GetAbility)
+            if (isTicking)
             {
-                if (ability != null)
+                if (currentSet >= 0 && currentSet < runtimeAbilitySets.Length)
                 {
-                    ability.TickAbility(Time.deltaTime);
+                    for (int j = 0; j < runtimeAbilitySets[currentSet].Length; j++)
+                    {
+                        runtimeAbilitySets[currentSet][j].TickAbility(Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"[{gameObject.name}] AbilityHandler currentSet is out of range!", this);
                 }
             }
         }
@@ -73,17 +89,17 @@ public class AbilityHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// ActivateAbility calls the Activate function in the specified ability in the current set
+    /// ActivateAbility calls the Activate function in the specified ability in the current set.
     /// </summary>
     /// <param name="abilityId">The index for the ability to activate</param>
     public void ActivateAbility(int abilityId)
     {
-        AbilitySetData activeSet = abilitySets[currentSet];
+        Ability[] activeSet = runtimeAbilitySets[currentSet];
         bool abilityUsed = false;
 
-        if (abilityId >= 0 && abilityId < activeSet.GetAbility.Length)
+        if (abilityId >= 0 && abilityId < activeSet.Length)
         {
-            Ability ability = activeSet.GetAbility[abilityId];
+            Ability ability = activeSet[abilityId];
             if (ability != null && ability.Activate(gameObject))
             {
                 abilityUsed = true;
@@ -102,5 +118,15 @@ public class AbilityHandler : MonoBehaviour
         {
             Debug.Log($"Ability {abilityId} did not activate.");
         }
+    }
+
+    /// <summary>
+    /// CycleAbilitySet cycles the current set to the next once, looping back to the starting set once it reaches the end.
+    /// </summary>
+    public void CycleAbilitySet()
+    {
+        if (runtimeAbilitySets == null || runtimeAbilitySets.Length <= 1) return;
+
+        currentSet = (currentSet + 1) % runtimeAbilitySets.Length;
     }
 }
