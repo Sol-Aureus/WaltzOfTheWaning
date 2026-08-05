@@ -1,0 +1,62 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/BackgroundBox.uss?fileID=7433441132597879392&amp;guid=a53fdf9363c0dcf4b9047fd65c3a6dd1&amp;type=3#BackgroundBox"/>
+    <ui:VisualElement name="CharacterStatBox" class="background" style="position: absolute; width: 512px; aspect-ratio: auto; top: 48px; left: 48px; bottom: 48px;">
+        <ui:Label name="Overview" text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." enable-rich-text="true" class="character_text"/>
+        <ui:Label text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." name="Statistics" class="character_text"/>
+        <ui:TabView name="TabView" style="height: 512px; background-color: rgba(255, 255, 255, 0.886); margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px; border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px;">
+            <ui:Tab label="Tab">
+                <ui:ScrollView>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                </ui:ScrollView>
+            </ui:Tab>
+            <ui:Tab label="Tab" name="Tab">
+                <ui:ScrollView>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                </ui:ScrollView>
+            </ui:Tab>
+            <ui:Tab label="Tab">
+                <ui:ScrollView>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                </ui:ScrollView>
+            </ui:Tab>
+            <ui:Tab label="Tab">
+                <ui:ScrollView>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                </ui:ScrollView>
+            </ui:Tab>
+            <ui:Tab label="Tab">
+                <ui:ScrollView>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" class="character_text"/>
+                </ui:ScrollView>
+            </ui:Tab>
+        </ui:TabView>
+    </ui:VisualElement>
+    <ui:VisualElement name="CharacterSelectionBox" class="selection_box background" style="top: 48px; right: 48px; bottom: 48px; position: absolute; width: 256px;">
+        <ui:ScrollView name="ScrollView" style="visibility: visible;">
+            <ui:Button class="character_button"/>
+            <ui:Button class="character_button"/>
+            <ui:Button class="character_button"/>
+            <ui:Button class="character_button"/>
+            <ui:Button class="character_button"/>
+        </ui:ScrollView>
+    </ui:VisualElement>
+    <ui:Button text="Button" name="PlayButton" style="position: absolute; white-space: nowrap; translate: 956px 0; height: 96px; width: 256px; bottom: 48px; transform-origin: bottom;"/>
+    <ui:Label text="Label" name="CharacterName" class="character_text" style="top: 48px; position: absolute; width: 227px; height: 83px; translate: 956px 0; transform-origin: top;"/>
+</ui:UXML>

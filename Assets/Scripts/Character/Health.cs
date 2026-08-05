@@ -48,9 +48,10 @@ public class Health : MonoBehaviour
     /// TakeDamage applies damage to the character's health, randomly rounding to an integer value. Grey health is also reduced by a fraction of the damage taken. The damage is modified by the character's damage taken multiplier. Returns if this damage kills the character.
     /// </summary>
     /// <param name="damage">The amount of damage to apply to the character's health.</param>
-    public bool TakeDamage(float damage)
+    public ReturnDamage TakeDamage(float damage)
     {
         UpdateModifiers();
+        ReturnDamage returnInfo = new ReturnDamage(0, 0, healthData.GetMaxHealth, false);
         float damageToTake = (damage + DamageResistanceModifier.FlatBonus) * DamageResistanceModifier.MultiplierBonus;
         int effectiveDamage = Mathf.FloorToInt(damageToTake);
         int effectiveGreyDamage = Mathf.FloorToInt(damageToTake / 10);
@@ -68,8 +69,15 @@ public class Health : MonoBehaviour
 
         ChangeCurrentHealth(-effectiveDamage);
         ChangeGreyHealth(-effectiveGreyDamage);
+
+        returnInfo.DamageTaken = effectiveDamage;
+        returnInfo.HealthRemaining = currentHealth;
+
+        returnInfo.HitKilled = CheckDeath();
+
         Debug.Log($"Damage Taken: {effectiveDamage}, Grey Damage Taken: {effectiveGreyDamage}, Current Health: {currentHealth}, Grey Health: {greyHealth}");
-        return CheckDeath();
+
+        return returnInfo;
     }
 
     /// <summary>
