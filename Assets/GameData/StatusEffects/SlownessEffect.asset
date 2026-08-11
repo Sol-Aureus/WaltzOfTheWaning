@@ -18,3 +18,4 @@ MonoBehaviour:
   <tickIntervalSeconds>k__BackingField: 0
   <stackingBehavior>k__BackingField: 1
   <decrementStacksOnTimeout>k__BackingField: 2
+  speedMultiplier: 0.85

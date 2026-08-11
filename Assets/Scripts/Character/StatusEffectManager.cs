@@ -48,10 +48,9 @@ public class StatusEffectManager : MonoBehaviour
     }
 
     // Master Dictionary structure: Dictionary<Attribute, Dictionary<SourceID, Modifier>>
-    private Dictionary<CharacterAttribute, Dictionary<string, StatModifier>> masterModifiers
-        = new Dictionary<CharacterAttribute, Dictionary<string, StatModifier>>();
+    private Dictionary<CharacterAttribute, Dictionary<string, StatModifier>> masterModifiers = new();
 
-    private Dictionary<CharacterAttribute, StatModifier> cachedFinalModifiers = new Dictionary<CharacterAttribute, StatModifier>();
+    private Dictionary<CharacterAttribute, StatModifier> cachedFinalModifiers = new();
 
     /// <summary>
     /// SetAttributeModifier allows a status effect to register its specific modifier for a given <see cref="CharacterAttribute"/>. It uses the source ID (typically the status effect's unique identifier) to ensure that multiple effects can modify the same attribute without conflict. After setting the modifier, it recalculates and applies the final aggregated modifier for that attribute.

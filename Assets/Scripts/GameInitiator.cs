@@ -27,7 +27,7 @@ public class GameInitiator : MonoBehaviour
 
     private async Awaitable CreateObjects()
     {
-        SceneManager.LoadScene("LevelScene", LoadSceneMode.Additive);
+        await SceneManager.LoadSceneAsync("LevelScene", LoadSceneMode.Additive);
         playerCharacter = Instantiate(playerCharacter);
     }
 

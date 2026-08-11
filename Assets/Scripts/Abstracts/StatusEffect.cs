@@ -22,6 +22,8 @@ public abstract class StatusEffect : ScriptableObject
     [field: SerializeField]
     public int decrementStacksOnTimeout { get; protected set; } // If 0, then the effect will remove all stacks on timeout
 
+    public StatusEffectManager TargetManager { get; private set; }
+
     /// <summary>
     /// OnApply is called once when a new status of this type is applied.
     /// </summary>

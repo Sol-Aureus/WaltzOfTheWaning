@@ -39,3 +39,14 @@
     left: 0;
     right: 0;
 }
+
+.unity-tab-view__header-container {
+    flex-wrap: wrap;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+

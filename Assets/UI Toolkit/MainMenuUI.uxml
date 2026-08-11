@@ -1,62 +1,98 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/BackgroundBox.uss?fileID=7433441132597879392&amp;guid=a53fdf9363c0dcf4b9047fd65c3a6dd1&amp;type=3#BackgroundBox"/>
-    <ui:VisualElement name="CharacterStatBox" class="background" style="position: absolute; width: 512px; aspect-ratio: auto; top: 48px; left: 48px; bottom: 48px;">
-        <ui:Label name="Overview" text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." enable-rich-text="true" class="character_text"/>
-        <ui:Label text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." name="Statistics" class="character_text"/>
-        <ui:TabView name="TabView" style="height: 512px; background-color: rgba(255, 255, 255, 0.886); margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px; border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px;">
-            <ui:Tab label="Tab">
+    <ui:VisualElement name="CharacterInfoBox" data-source="project://database/Assets/GameData/Sample/UI/SampleMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleMenuData" class="background" style="position: absolute; width: 512px; aspect-ratio: auto; top: 48px; left: 48px; bottom: 48px;">
+        <ui:Label name="Overview" text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." class="character_text">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="characterOverview" binding-mode="ToTarget"/>
+            </Bindings>
+        </ui:Label>
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; height: 138px; flex-shrink: 0; margin-top: 3px; margin-right: 4px; margin-bottom: 3px; margin-left: 3px;">
+            <ui:Label name="Statistics" class="character_text" style="flex-grow: 1; flex-shrink: 1; width: 50%; margin-top: 0; margin-right: 2px; margin-bottom: 0; margin-left: 0;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="GetStatistics" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label name="Statistics" class="character_text" style="flex-grow: 1; flex-shrink: 1; width: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 2px;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="GetCharacterKeywords" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+        <ui:TabView name="TabView" style="height: 512px; background-color: rgba(255, 255, 255, 0.886); margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px; border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px; flex-grow: 1;">
+            <ui:Tab label="Tab" name="Primary">
                 <ui:ScrollView>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" name="PrimaryDescription" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionData.abilityDescription" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="PrimaryCooldown" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionData.abilityCooldown" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
                 </ui:ScrollView>
+                <Bindings>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:Tab>
-            <ui:Tab label="Tab" name="Tab">
-                <ui:ScrollView>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
+            <ui:Tab label="Tab" name="AB1">
+                <ui:ScrollView name="ScrollView">
+                    <ui:Label text="Label" name="AB1Description" class="character_text"/>
+                    <ui:Label text="Label" name="AB1Cooldown" class="character_text"/>
+                    <ui:Label text="Label" name="AB1Upgrade1" class="character_text"/>
+                    <ui:Label text="Label" name="AB1Upgrade2" class="character_text"/>
+                    <ui:Label text="Label" name="AB1Upgrade3" class="character_text"/>
                 </ui:ScrollView>
+                <Bindings>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:Tab>
-            <ui:Tab label="Tab">
+            <ui:Tab label="Tab" name="AB2">
                 <ui:ScrollView>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Description" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Cooldown" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Upgrade1" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Upgrade2" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Upgrade3" class="character_text"/>
                 </ui:ScrollView>
+                <Bindings>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:Tab>
-            <ui:Tab label="Tab">
+            <ui:Tab label="Tab" name="AB3">
                 <ui:ScrollView>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Description" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Cooldown" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Upgrade1" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Upgrade2" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Upgrade3" class="character_text"/>
                 </ui:ScrollView>
+                <Bindings>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:Tab>
-            <ui:Tab label="Tab">
+            <ui:Tab label="Tab" name="AB4">
                 <ui:ScrollView>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
-                    <ui:Label text="Label" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Description" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Cooldown" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Upgrade1" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Upgrade2" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Upgrade3" class="character_text"/>
                 </ui:ScrollView>
+                <Bindings>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:Tab>
         </ui:TabView>
     </ui:VisualElement>
     <ui:VisualElement name="CharacterSelectionBox" class="selection_box background" style="top: 48px; right: 48px; bottom: 48px; position: absolute; width: 256px;">
-        <ui:ScrollView name="ScrollView" style="visibility: visible;">
-            <ui:Button class="character_button"/>
-            <ui:Button class="character_button"/>
-            <ui:Button class="character_button"/>
-            <ui:Button class="character_button"/>
-            <ui:Button class="character_button"/>
-        </ui:ScrollView>
+        <ui:ScrollView name="CharacterList" style="visibility: visible;"/>
     </ui:VisualElement>
-    <ui:Button text="Button" name="PlayButton" style="position: absolute; white-space: nowrap; translate: 956px 0; height: 96px; width: 256px; bottom: 48px; transform-origin: bottom;"/>
-    <ui:Label text="Label" name="CharacterName" class="character_text" style="top: 48px; position: absolute; width: 227px; height: 83px; translate: 956px 0; transform-origin: top;"/>
+    <ui:Button text="Play" name="PlayButton" style="position: absolute; white-space: nowrap; translate: 956px 0; height: 96px; width: 256px; bottom: 48px; transform-origin: bottom;"/>
+    <ui:Label text="Label" name="CharacterName" data-source="project://database/Assets/GameData/Sample/UI/SampleMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleMenuData" class="character_text" style="top: 48px; position: absolute; width: 227px; height: 83px; translate: 956px 0; transform-origin: top;">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="characterTitle" binding-mode="ToTarget"/>
+        </Bindings>
+    </ui:Label>
 </ui:UXML>

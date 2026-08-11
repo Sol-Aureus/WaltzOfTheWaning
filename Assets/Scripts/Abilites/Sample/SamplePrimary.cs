@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SamplePrimary", menuName = "Abilities/SamplePrimary")]
 public class SamplePrimary : Ability
 {
-    private int damage = 10;
+    [SerializeField] private int damage;
 
     protected override void OnEnable()
     {

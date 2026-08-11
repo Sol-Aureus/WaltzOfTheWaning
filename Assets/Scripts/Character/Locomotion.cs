@@ -25,7 +25,6 @@ public class Locomotion : MonoBehaviour
     private enum MovementState
     {
         Grounded,
-        Sliding,
         Falling
     }
 
@@ -79,10 +78,6 @@ public class Locomotion : MonoBehaviour
         if (!characterController.isGrounded || isJumping)
         {
             currentState = MovementState.Falling;
-        }
-        else if (slopeAngle >= characterController.slopeLimit - 0.1f && slopeAngle <= 89.9f)
-        {
-            currentState = MovementState.Sliding;
         }
         else
         {
@@ -169,21 +164,6 @@ public class Locomotion : MonoBehaviour
                 finalMotion.y = verticalVelocity;
                 break;
 
-            case MovementState.Sliding:
-                Vector3 downSlopeDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
-                if (!isSliding)
-                {
-                    currentSlideSpeed = 0;
-                    isSliding = true;
-                }
-
-                Vector3 slideForce = CalculateSlideVelcocity(downSlopeDirection);
-                Vector3 lateralMovement = CalculateLateralSlideVelocity(downSlopeDirection);
-
-                finalMotion = slideForce + lateralMovement;
-                verticalVelocity = finalMotion.y;
-                break;
-
             case MovementState.Falling:
                 isSliding = false;
                 ApplyGravity();
@@ -220,43 +200,6 @@ public class Locomotion : MonoBehaviour
     {
         coyoteTimer = 0.2f;
         verticalVelocity = -(currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus;
-    }
-
-    /// <summary>
-    /// CalculateSlideVelcocity uses the angle of the slope to determine the direction and magnitude of gravity to apply
-    /// </summary>
-    /// <param name="slopeDirection">The tangent vector down the slope</param>
-    /// <returns>The slide velocity</returns>
-    private Vector3 CalculateSlideVelcocity(Vector3 slopeDirection)
-    {
-        float slopeRadians = slopeAngle * Mathf.Deg2Rad;
-        float angleGravityMultiplier = Mathf.Sin(slopeRadians);
-        currentSlideSpeed += (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus * angleGravityMultiplier * Time.deltaTime;
-
-        Vector3 slideForce = slopeDirection * currentSlideSpeed;
-        Vector3 downwardStickyForce = Vector3.down * (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus;
-
-        return slideForce + downwardStickyForce;
-    }
-
-    /// <summary>
-    /// CalculateLateralSlideVelocity uses the character's input to move along the 
-    /// </summary>
-    /// <param name="slopeDirection">The tangent vector down the slope</param>
-    /// <returns>The lateral slide velocity</returns>
-    private Vector3 CalculateLateralSlideVelocity(Vector3 slopeDirection)
-    {
-        Vector3 lateralDir = Vector3.Cross(slopeDirection, groundNormal).normalized;
-
-        float lateralInput = Vector3.Dot(moveDirection, lateralDir);
-
-        float targetLateralSpeed = lateralInput * (currentMovementSpeed + MovementSpeedModifier.FlatBonus) * MovementSpeedModifier.MultiplierBonus;
-
-        currentLateralSpeed = Mathf.MoveTowards(currentLateralSpeed, targetLateralSpeed, (currentAirAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus * Time.deltaTime);
-
-        Vector3 lateralMovement = lateralDir * currentLateralSpeed;
-
-        return lateralMovement;
     }
 
     /// <summary>

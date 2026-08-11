@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 898d94660b55ff64caf9818b3587dafd, type: 3}
   m_Name: SamplePrimary
   m_EditorClassIdentifier: Assembly-CSharp::SamplePrimary
+  <AbilityId>k__BackingField: SamplePrimary
+  <cooldownSeconds>k__BackingField: 2.5
+  <soulCost>k__BackingField: 0
+  <qiThreshold>k__BackingField: 0
+  <cooldownBehaviour>k__BackingField: 0
+  damage: 10
