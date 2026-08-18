@@ -143,7 +143,7 @@ public class Locomotion : MonoBehaviour
         if (movementInput.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, (currentRotationSpeed + RotationSpeedModifier.FlatBonus) * RotationSpeedModifier.MultiplierBonus * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotationSpeedModifier.EvaluateModifier(currentRotationSpeed, false) * Time.deltaTime);
         }
     }
 
@@ -179,15 +179,15 @@ public class Locomotion : MonoBehaviour
     /// </summary>
     private void CalculateHorizontalVelocity()
     {
-        Vector3 targetVelocity = moveDirection * (currentMovementSpeed + MovementSpeedModifier.FlatBonus) * MovementSpeedModifier.MultiplierBonus;
+        Vector3 targetVelocity = moveDirection * MovementSpeedModifier.EvaluateModifier(currentMovementSpeed, false);
 
         float acceleration;
         if (currentState == MovementState.Grounded) {
-            acceleration = (currentGroundAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus;
+            acceleration = AccelerationModifier.EvaluateModifier(currentGroundAcceleration, false);
         }
         else
         {
-            acceleration = (currentAirAcceleration + AccelerationModifier.FlatBonus) * AccelerationModifier.MultiplierBonus;
+            acceleration = AccelerationModifier.EvaluateModifier(currentAirAcceleration, false);
         } 
 
         currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
@@ -199,7 +199,7 @@ public class Locomotion : MonoBehaviour
     private void ApplyGroundState()
     {
         coyoteTimer = 0.2f;
-        verticalVelocity = -(currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus;
+        verticalVelocity = -GravityModifier.EvaluateModifier(currentGravity, false);
     }
 
     /// <summary>
@@ -207,7 +207,7 @@ public class Locomotion : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
-        verticalVelocity -= (currentGravity + GravityModifier.FlatBonus) * GravityModifier.MultiplierBonus * Time.deltaTime;
+        verticalVelocity -= GravityModifier.EvaluateModifier(currentGravity, false) * Time.deltaTime;
         isJumping = false;
     }
 
@@ -221,7 +221,7 @@ public class Locomotion : MonoBehaviour
     {
         if (jumpBufferTimer > 0 && coyoteTimer > 0)
         {
-            verticalVelocity = (currentJumpVelocity + JumpVelocityModifier.FlatBonus) * JumpVelocityModifier.MultiplierBonus;
+            verticalVelocity = JumpVelocityModifier.EvaluateModifier(currentJumpVelocity, false);
             jumpBufferTimer = 0;
             coyoteTimer = 0;
             isJumping = true;

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum CharacterAttribute
 {
     MovementSpeed,
@@ -22,6 +24,19 @@ public struct StatModifier
     {
         FlatBonus = flat;
         MultiplierBonus = mult;
+    }
+
+    /// <summary>
+    /// EvaluateModifier calculates the final value after applying the flat and multiplicative bonuses. If bypassNegation is true, it ensures that the flat bonus is not negative and the multiplier is not less than 1, effectively ignoring any resistances.
+    /// </summary>
+    /// <param name="baseValue">The incoming base value</param>
+    /// <param name="bypassNegation">Weather or not the negative bonususes will be ignored</param>
+    /// <returns>The new value</returns>
+    public float EvaluateModifier(float baseValue, bool bypassNegation)
+    {
+        float flat = bypassNegation ? Mathf.Max(0f, FlatBonus) : FlatBonus;
+        float mult = bypassNegation ? Mathf.Max(1f, MultiplierBonus) : MultiplierBonus;
+        return (baseValue + flat) * mult;
     }
 }
 

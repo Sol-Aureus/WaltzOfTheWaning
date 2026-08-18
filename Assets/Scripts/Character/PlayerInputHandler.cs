@@ -127,7 +127,7 @@ public class PlayerInputHandler : MonoBehaviour
             // Find the StatusEffectManager on the player and apply the effect
             if (TryGetComponent<Health>(out Health health))
             {
-                health.TakeDamage(testDamageAmount);
+                health.TakeDamage(testDamageAmount, DamageType.Normal);
                 Debug.Log($"Debug applied 10 damage to player.");
             }
         }

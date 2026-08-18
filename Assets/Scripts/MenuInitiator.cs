@@ -14,7 +14,7 @@ public class MenuInitiator : MonoBehaviour
     [SerializeField] private PanelRenderer panelRenderer;
 
     [Header("Game Objects")]
-    [SerializeField] private GameObject[] playerModels;
+    [SerializeField] private GameObject[] characterModels;
 
     [Header("Character Data")]
     [SerializeField] private CharacterMenuData[] characterData;
@@ -39,9 +39,9 @@ public class MenuInitiator : MonoBehaviour
     {
         await SceneManager.LoadSceneAsync("CharacterSelectScene", LoadSceneMode.Additive);
 
-        for (int i = 0; i < playerModels.Length; i++)
+        for (int i = 0; i < characterModels.Length; i++)
         {
-            playerModels[i] = Instantiate(playerModels[i]);
+            characterModels[i] = Instantiate(characterModels[i]);
         }
     }
 
@@ -49,14 +49,15 @@ public class MenuInitiator : MonoBehaviour
     {
         lighting.enabled = true;
 
-        Debug.Log("Setting up UI Controller with PanelRenderer and Character Data...");
-        uiController.SetCharacterData(characterData);
-        uiController.SetPanelRenderer(panelRenderer);
+        camera.transform.position = new Vector3(-0.7f, 1.7f, 2.15f);
+        camera.transform.rotation = Quaternion.Euler(20, 155, 0);
 
-        for (int i = 0; i < playerModels.Length; i++)
+        for (int i = 0; i < characterModels.Length; i++)
         {
-            playerModels[i].transform.position = Vector3.zero;
-            playerModels[i].SetActive(false);
+            characterModels[i].transform.position = Vector3.zero;
         }
+
+        uiController.SetCharacterData(characterData, characterModels);
+        uiController.SetPanelRenderer(panelRenderer);
     }
 }

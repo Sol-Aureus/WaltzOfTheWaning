@@ -46,6 +46,10 @@ public abstract class Ability : ScriptableObject
         {
             DamageModifier = manager.GetFinalModifier(CharacterAttribute.DamageMultiplier);
         }
+        else
+        {
+            Debug.LogError($"Ability is missing a StatusEffectManager on its hierarchy!", this);
+        }
 
         UseAbility(caster);
         cooldownTimer -= cooldownSeconds;

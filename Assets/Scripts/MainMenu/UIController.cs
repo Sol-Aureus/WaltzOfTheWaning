@@ -6,7 +6,8 @@ public class UIController : MonoBehaviour
     private PanelRenderer panelRenderer;
 
     private VisualElement rootElement;
-    private CharacterMenuData[] characters;
+    private CharacterMenuData[] characterData;
+    private GameObject[] characterModels;
 
     /// <summary>
     /// SetPanelRenderer sets the PanelRenderer for this UIController and registers a callback for when the UI is reloaded.
@@ -29,7 +30,7 @@ public class UIController : MonoBehaviour
     {
         rootElement = root;
 
-        if (characters != null && characters.Length > 0)
+        if (characterData != null && characterData.Length > 0)
         {
             UpdateCharacterList();
             UpdateInfoBox(0);
@@ -40,9 +41,10 @@ public class UIController : MonoBehaviour
     /// SetCharacterData sets the character data for this UIController. It should be called before the UI is reloaded to ensure that the character list and info box are populated correctly.
     /// </summary>
     /// <param name="characterData">The list of Menu Character Data</param>
-    public void SetCharacterData(CharacterMenuData[] characterData)
+    public void SetCharacterData(CharacterMenuData[] newCharacterData, GameObject[] newCharacterModels)
     {
-        characters = characterData;
+        characterData = newCharacterData;
+        characterModels = newCharacterModels;
     }
 
     /// <summary>
@@ -56,8 +58,9 @@ public class UIController : MonoBehaviour
         VisualElement characterInfoBox = rootElement.Q<VisualElement>("CharacterInfoBox");
         VisualElement characterName = rootElement.Q<VisualElement>("CharacterName");
 
-        characterInfoBox.dataSource = characters[charIndex];
-        characterName.dataSource = characters[charIndex];
+        characterInfoBox.dataSource = characterData[charIndex];
+        characterName.dataSource = characterData[charIndex];
+        ShowModel(charIndex);
     }
 
     /// <summary>
@@ -70,23 +73,49 @@ public class UIController : MonoBehaviour
         VisualElement characterList = rootElement.Q<VisualElement>("CharacterList");
         characterList.Clear();
 
-        if (characters == null || characters.Length == 0) return;
+        if (characterData == null || characterData.Length == 0) return;
 
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characterData.Length; i++)
         {
             // 1. Capture index locally to avoid closure issues
             int charIndex = i;
 
             // 2. Instantiate button
             Button btn = new Button();
-            btn.text = characters[i].GetCharacterTitle; // Adjust field name to match your data asset
-            btn.style.backgroundImage = new StyleBackground(characters[i].GetCharacterPortrait); // Adjust field name to match your data asset
+            btn.text = characterData[i].GetCharacterTitle; // Adjust field name to match your data asset
+            btn.style.backgroundImage = new StyleBackground(characterData[i].GetCharacterPortrait); // Adjust field name to match your data asset
 
             // 3. Register click callback
             btn.clicked += () => UpdateInfoBox(charIndex);
 
             // 4. Add button to list container
             characterList.Add(btn);
+        }
+    }
+
+    private void ShowModel(int charIndex)
+    {
+        if (characterModels == null || charIndex < 0 || charIndex >= characterModels.Length) return;
+
+        HideAllModels();
+
+        GameObject modelToShow = characterModels[charIndex];
+        if (modelToShow != null)
+        {
+            modelToShow.SetActive(true);
+        }
+    }
+
+    private void HideAllModels()
+    {
+        if (characterModels == null) return;
+
+        foreach (var model in characterModels)
+        {
+            if (model != null)
+            {
+                model.SetActive(false);
+            }
         }
     }
 }

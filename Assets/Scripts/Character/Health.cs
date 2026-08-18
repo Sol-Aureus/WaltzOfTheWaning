@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum DamageType
+{
+    Normal, // Affected by damage resistance modifiers
+    True, // Ignores damage resistance modifiers
+    Neutral // Ignores all modifiers and is applied directly to health
+}
+
 public class Health : MonoBehaviour
 {
     [Header("References")]
@@ -48,11 +55,25 @@ public class Health : MonoBehaviour
     /// TakeDamage applies damage to the character's health, randomly rounding to an integer value. Grey health is also reduced by a fraction of the damage taken. The damage is modified by the character's damage taken multiplier. Returns if this damage kills the character.
     /// </summary>
     /// <param name="damage">The amount of damage to apply to the character's health.</param>
-    public ReturnDamage TakeDamage(float damage)
+    public ReturnDamage TakeDamage(float damage, DamageType type)
     {
-        UpdateModifiers();
+        float damageToTake = 0f;
+        if (type == DamageType.Normal)
+        {
+            UpdateModifiers();
+            damageToTake = DamageResistanceModifier.EvaluateModifier(damage, false);
+        }
+        else if (type == DamageType.True)
+        {
+            UpdateModifiers();
+            damageToTake = DamageResistanceModifier.EvaluateModifier(damage, true);
+        }
+        else
+        {
+            damageToTake = damage;
+        }
+
         ReturnDamage returnInfo = new ReturnDamage(0, 0, healthData.GetMaxHealth, false);
-        float damageToTake = (damage + DamageResistanceModifier.FlatBonus) * DamageResistanceModifier.MultiplierBonus;
         int effectiveDamage = Mathf.FloorToInt(damageToTake);
         int effectiveGreyDamage = Mathf.FloorToInt(damageToTake / 10);
         float randomDamage = damage - effectiveDamage;

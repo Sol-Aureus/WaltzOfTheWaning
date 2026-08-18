@@ -19,7 +19,7 @@ public class SamplePrimary : Ability
     {
         if (caster.TryGetComponent<Health>(out Health health))
         {
-            health.TakeDamage((damage + DamageModifier.FlatBonus) * DamageModifier.MultiplierBonus);
+            health.TakeDamage(DamageModifier.EvaluateModifier(damage, false), DamageType.Normal);
         }
     }
 }

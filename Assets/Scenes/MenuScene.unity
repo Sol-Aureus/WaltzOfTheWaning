@@ -152,8 +152,10 @@ MonoBehaviour:
   lighting: {fileID: 2723569048271042374, guid: 45f731e5bb6e624469d953fdca44b57d, type: 3}
   uiController: {fileID: 3220960212949134612, guid: 7a1e13a6fffa6744caff28a8d0be48bc, type: 3}
   panelRenderer: {fileID: 2548123471538268994, guid: 04b4342c48021974a82bfd0cf09a3a89, type: 3}
-  playerModels:
-  - {fileID: 9189891238980924303, guid: 8ecfb0f4fb61dea43a402c2080bcf865, type: 3}
+  characterModels:
+  - {fileID: 1692468126580653705, guid: 6206c14b6fb53694cb6b0bb8a41fcb9c, type: 3}
+  - {fileID: 6159756555277502174, guid: 5ab167a26e66ca540b4bbfd94705b2d4, type: 3}
+  - {fileID: 5347808569829381468, guid: a2946f7bb3734fb45837bffca017fc9a, type: 3}
   characterData:
   - {fileID: 11400000, guid: 4c0a6f6ef721cea439f834a9b2ef2e34, type: 2}
   - {fileID: 11400000, guid: 3eb9eeeb48f5a66499e5c1af93326e65, type: 2}
