@@ -158,8 +158,9 @@ MonoBehaviour:
   - {fileID: 5347808569829381468, guid: a2946f7bb3734fb45837bffca017fc9a, type: 3}
   characterData:
   - {fileID: 11400000, guid: 4c0a6f6ef721cea439f834a9b2ef2e34, type: 2}
-  - {fileID: 11400000, guid: 3eb9eeeb48f5a66499e5c1af93326e65, type: 2}
+  - {fileID: 11400000, guid: 9ec018cb15b7bb8439236ee988224608, type: 2}
   - {fileID: 11400000, guid: 4c0a6f6ef721cea439f834a9b2ef2e34, type: 2}
+  characterSelection: {fileID: 0}
 --- !u!4 &827708922
 Transform:
   m_ObjectHideFlags: 0

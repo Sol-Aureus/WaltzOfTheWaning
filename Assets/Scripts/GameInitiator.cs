@@ -10,7 +10,10 @@ public class GameInitiator : MonoBehaviour
     [Header("UI")]
 
     [Header("Game Objects")]
-    [SerializeField] private GameObject playerCharacter;
+    [SerializeField] private GameObject[] playerCharacters;
+
+    [Header("Character Data")]
+    [SerializeField] private CharacterSelection characterSelection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private async Awaitable Start()
@@ -28,12 +31,12 @@ public class GameInitiator : MonoBehaviour
     private async Awaitable CreateObjects()
     {
         await SceneManager.LoadSceneAsync("LevelScene", LoadSceneMode.Additive);
-        playerCharacter = Instantiate(playerCharacter);
+        playerCharacters[characterSelection.selectedCharacterIndex] = Instantiate(playerCharacters[characterSelection.selectedCharacterIndex]);
     }
 
     private void PrepareGame()
     {
         lighting.enabled = true;
-        playerCharacter.transform.position = Vector3.zero;
+        playerCharacters[characterSelection.selectedCharacterIndex].transform.position = Vector3.zero;
     }
 }

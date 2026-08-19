@@ -1,11 +1,7 @@
 using UnityEngine;
 
-public class CharacterSelection : MonoBehaviour
+[CreateAssetMenu(fileName = "SelectedCharacterData", menuName = "Game/Selected Character Data")]
+public class CharacterSelection : ScriptableObject
 {
-    private GameObject selectedCharacter;
-
-    public void SelectCharacter(GameObject character)
-    {
-        selectedCharacter = character;
-    }
+    public int selectedCharacterIndex = 0;
 }

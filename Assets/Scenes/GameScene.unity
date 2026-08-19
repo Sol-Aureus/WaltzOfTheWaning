@@ -149,7 +149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   lighting: {fileID: 2723569048271042374, guid: 45f731e5bb6e624469d953fdca44b57d, type: 3}
-  playerCharacter: {fileID: 9189891238980924303, guid: 8ecfb0f4fb61dea43a402c2080bcf865, type: 3}
+  playerCharacters:
+  - {fileID: 9189891238980924303, guid: 8ecfb0f4fb61dea43a402c2080bcf865, type: 3}
+  - {fileID: 9189891238980924303, guid: 63fcd855bc2d93e4f8ef5d080141e222, type: 3}
+  - {fileID: 9189891238980924303, guid: 8ecfb0f4fb61dea43a402c2080bcf865, type: 3}
+  characterSelection: {fileID: 11400000, guid: 57fbfc2eb8c921749996d8e13be82bdf, type: 2}
 --- !u!4 &1097866223
 Transform:
   m_ObjectHideFlags: 0

@@ -4,10 +4,11 @@ using UnityEngine.UIElements;
 public class UIController : MonoBehaviour
 {
     private PanelRenderer panelRenderer;
-
     private VisualElement rootElement;
+
     private CharacterMenuData[] characterData;
     private GameObject[] characterModels;
+    private CharacterSelection characterSelection;
 
     /// <summary>
     /// SetPanelRenderer sets the PanelRenderer for this UIController and registers a callback for when the UI is reloaded.
@@ -33,7 +34,7 @@ public class UIController : MonoBehaviour
         if (characterData != null && characterData.Length > 0)
         {
             UpdateCharacterList();
-            UpdateInfoBox(0);
+            UpdateCharacterSelection(0);
         }
     }
 
@@ -41,26 +42,11 @@ public class UIController : MonoBehaviour
     /// SetCharacterData sets the character data for this UIController. It should be called before the UI is reloaded to ensure that the character list and info box are populated correctly.
     /// </summary>
     /// <param name="characterData">The list of Menu Character Data</param>
-    public void SetCharacterData(CharacterMenuData[] newCharacterData, GameObject[] newCharacterModels)
+    public void SetCharacterData(CharacterMenuData[] newCharacterData, GameObject[] newCharacterModels, CharacterSelection newCharacterSelection)
     {
         characterData = newCharacterData;
         characterModels = newCharacterModels;
-    }
-
-    /// <summary>
-    /// UpdateInfoBox updates the character info box with the data of the character at the specified index.
-    /// </summary>
-    /// <param name="charIndex">The index for the character to load</param>
-    public void UpdateInfoBox(int charIndex)
-    {
-        if (rootElement == null) return;
-
-        VisualElement characterInfoBox = rootElement.Q<VisualElement>("CharacterInfoBox");
-        VisualElement characterName = rootElement.Q<VisualElement>("CharacterName");
-
-        characterInfoBox.dataSource = characterData[charIndex];
-        characterName.dataSource = characterData[charIndex];
-        ShowModel(charIndex);
+        characterSelection = newCharacterSelection;
     }
 
     /// <summary>
@@ -86,13 +72,43 @@ public class UIController : MonoBehaviour
             btn.style.backgroundImage = new StyleBackground(characterData[i].GetCharacterPortrait); // Adjust field name to match your data asset
 
             // 3. Register click callback
-            btn.clicked += () => UpdateInfoBox(charIndex);
+            btn.clicked += () => UpdateCharacterSelection(charIndex);
 
             // 4. Add button to list container
             characterList.Add(btn);
         }
     }
 
+    /// <summary>
+    /// UpdateCharacterSelection calls UpdateInfoBox and ShowModel to update the character info box and display the corresponding character model based on the selected index. It also updates the selected character index in the CharacterSelection ScriptableObject.
+    /// </summary>
+    /// <param name="charIndex">The index for the character to load</param>
+    public void UpdateCharacterSelection(int charIndex)
+    {
+        UpdateInfoBox(charIndex);
+        ShowModel(charIndex);
+        SetSelectedCharacter(charIndex);
+    }
+
+    /// <summary>
+    /// UpdateInfoBox updates the character info box with the data of the character at the specified index.
+    /// </summary>
+    /// <param name="charIndex">The index for the character to load</param>
+    public void UpdateInfoBox(int charIndex)
+    {
+        if (rootElement == null) return;
+
+        VisualElement characterInfoBox = rootElement.Q<VisualElement>("CharacterInfoBox");
+        VisualElement characterName = rootElement.Q<VisualElement>("CharacterName");
+
+        characterInfoBox.dataSource = characterData[charIndex];
+        characterName.dataSource = characterData[charIndex];
+    }
+
+    /// <summary>
+    /// ShowModel activates the character model corresponding to the specified index and deactivates all other models.
+    /// </summary>
+    /// <param name="charIndex">The index for the character model to load</param>
     private void ShowModel(int charIndex)
     {
         if (characterModels == null || charIndex < 0 || charIndex >= characterModels.Length) return;
@@ -106,6 +122,9 @@ public class UIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// HideAllModels deactivates all character models in the characterModels array.
+    /// </summary>
     private void HideAllModels()
     {
         if (characterModels == null) return;
@@ -117,5 +136,19 @@ public class UIController : MonoBehaviour
                 model.SetActive(false);
             }
         }
+    }
+
+    /// <summary>
+    /// SetSelectedCharacter updates the selected character index in the CharacterSelection ScriptableObject to the specified index.
+    /// </summary>
+    /// <param name="index">The index for the character to select</param>
+    private void SetSelectedCharacter(int index)
+    {
+        if (characterSelection == null)
+        {
+            Debug.LogWarning("CharacterSelection ScriptableObject is not assigned.");
+            return;
+        }
+        characterSelection.selectedCharacterIndex = index;
     }
 }

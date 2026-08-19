@@ -12,7 +12,11 @@ public class CharacterMenuData : ScriptableObject
 
     [SerializeField] private MovementData movementData;
     [SerializeField] private HealthData healthData;
-    [SerializeField] private AbilityDescriptionData abilityDescriptionData;
+    [SerializeField] private AbilityDescriptionData abilityDescriptionPrimary;
+    [SerializeField] private AbilityDescriptionData abilityDescriptionAb1;
+    [SerializeField] private AbilityDescriptionData abilityDescriptionAb2;
+    [SerializeField] private AbilityDescriptionData abilityDescriptionAb3;
+    [SerializeField] private AbilityDescriptionData abilityDescriptionAb4;
 
     [CreateProperty] public int health => healthData.GetMaxHealth;
     [CreateProperty] public float movementSpeed => movementData.GetMovementSpeed;

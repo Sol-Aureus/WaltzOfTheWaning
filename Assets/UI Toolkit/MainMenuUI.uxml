@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/BackgroundBox.uss?fileID=7433441132597879392&amp;guid=a53fdf9363c0dcf4b9047fd65c3a6dd1&amp;type=3#BackgroundBox"/>
-    <ui:VisualElement name="CharacterInfoBox" data-source="project://database/Assets/GameData/Sample/UI/SampleMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleMenuData" class="background" style="position: absolute; width: 512px; aspect-ratio: auto; top: 48px; left: 48px; bottom: 48px;">
+    <ui:VisualElement name="CharacterInfoBox" data-source="project://database/Assets/GameData/Characters/SampleSelf/UI/SampleSelfMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleSelfMenuData" class="background" style="position: absolute; width: 512px; aspect-ratio: auto; top: 48px; left: 48px; bottom: 48px;">
         <ui:Label name="Overview" text="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat." class="character_text">
             <Bindings>
                 <ui:DataBinding property="text" data-source-path="characterOverview" binding-mode="ToTarget"/>
@@ -23,65 +23,145 @@
                 <ui:ScrollView>
                     <ui:Label text="Label" name="PrimaryDescription" class="character_text">
                         <Bindings>
-                            <ui:DataBinding property="text" data-source-path="abilityDescriptionData.abilityDescription" binding-mode="ToTarget"/>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionPrimary.abilityDescription" binding-mode="ToTarget"/>
                         </Bindings>
                     </ui:Label>
                     <ui:Label text="Label" name="PrimaryCooldown" class="character_text">
                         <Bindings>
-                            <ui:DataBinding property="text" data-source-path="abilityDescriptionData.abilityCooldown" binding-mode="ToTarget"/>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionPrimary.abilityCooldown" binding-mode="ToTarget"/>
                         </Bindings>
                     </ui:Label>
                 </ui:ScrollView>
                 <Bindings>
-                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionPrimary.abilityName" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Tab>
             <ui:Tab label="Tab" name="AB1">
                 <ui:ScrollView name="ScrollView">
-                    <ui:Label text="Label" name="AB1Description" class="character_text"/>
-                    <ui:Label text="Label" name="AB1Cooldown" class="character_text"/>
-                    <ui:Label text="Label" name="AB1Upgrade1" class="character_text"/>
-                    <ui:Label text="Label" name="AB1Upgrade2" class="character_text"/>
-                    <ui:Label text="Label" name="AB1Upgrade3" class="character_text"/>
+                    <ui:Label text="Label" name="AB1Description" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb1.abilityDescription" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB1Cooldown" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb1.abilityCooldown" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB1Upgrade1" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb1.upgrade1Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB1Upgrade2" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb1.upgrade2Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB1Upgrade3" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb1.upgrade3Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
                 </ui:ScrollView>
                 <Bindings>
-                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionAb1.abilityName" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Tab>
             <ui:Tab label="Tab" name="AB2">
                 <ui:ScrollView>
-                    <ui:Label text="Label" name="AB2Description" class="character_text"/>
-                    <ui:Label text="Label" name="AB2Cooldown" class="character_text"/>
-                    <ui:Label text="Label" name="AB2Upgrade1" class="character_text"/>
-                    <ui:Label text="Label" name="AB2Upgrade2" class="character_text"/>
-                    <ui:Label text="Label" name="AB2Upgrade3" class="character_text"/>
+                    <ui:Label text="Label" name="AB2Description" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb2.abilityDescription" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB2Cooldown" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb2.abilityCooldown" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB2Upgrade1" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb2.upgrade1Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB2Upgrade2" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb2.upgrade2Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB2Upgrade3" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb2.upgrade3Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
                 </ui:ScrollView>
                 <Bindings>
-                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionAb2.abilityName" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Tab>
             <ui:Tab label="Tab" name="AB3">
                 <ui:ScrollView>
-                    <ui:Label text="Label" name="AB3Description" class="character_text"/>
-                    <ui:Label text="Label" name="AB3Cooldown" class="character_text"/>
-                    <ui:Label text="Label" name="AB3Upgrade1" class="character_text"/>
-                    <ui:Label text="Label" name="AB3Upgrade2" class="character_text"/>
-                    <ui:Label text="Label" name="AB3Upgrade3" class="character_text"/>
+                    <ui:Label text="Label" name="AB3Description" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb3.abilityDescription" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB3Cooldown" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb3.abilityCooldown" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB3Upgrade1" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb3.upgrade1Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB3Upgrade2" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb3.upgrade2Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB3Upgrade3" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb3.upgrade3Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
                 </ui:ScrollView>
                 <Bindings>
-                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionAb3.abilityName" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Tab>
             <ui:Tab label="Tab" name="AB4">
                 <ui:ScrollView>
-                    <ui:Label text="Label" name="AB4Description" class="character_text"/>
-                    <ui:Label text="Label" name="AB4Cooldown" class="character_text"/>
-                    <ui:Label text="Label" name="AB4Upgrade1" class="character_text"/>
-                    <ui:Label text="Label" name="AB4Upgrade2" class="character_text"/>
-                    <ui:Label text="Label" name="AB4Upgrade3" class="character_text"/>
+                    <ui:Label text="Label" name="AB4Description" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb4.abilityDescription" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB4Cooldown" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb4.abilityCooldown" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB4Upgrade1" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb4.upgrade1Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB4Upgrade2" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb4.upgrade2Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Label" name="AB4Upgrade3" class="character_text">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="abilityDescriptionAb4.upgrade3Description" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Label>
                 </ui:ScrollView>
                 <Bindings>
-                    <ui:DataBinding property="label" data-source-path="abilityDescriptionData.abilityName" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="label" data-source-path="abilityDescriptionAb4.abilityName" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Tab>
         </ui:TabView>
@@ -90,7 +170,7 @@
         <ui:ScrollView name="CharacterList" style="visibility: visible;"/>
     </ui:VisualElement>
     <ui:Button text="Play" name="PlayButton" style="position: absolute; white-space: nowrap; translate: 956px 0; height: 96px; width: 256px; bottom: 48px; transform-origin: bottom;"/>
-    <ui:Label text="Label" name="CharacterName" data-source="project://database/Assets/GameData/Sample/UI/SampleMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleMenuData" class="character_text" style="top: 48px; position: absolute; width: 227px; height: 83px; translate: 956px 0; transform-origin: top;">
+    <ui:Label text="Label" name="CharacterName" data-source="project://database/Assets/GameData/Characters/SampleSelf/UI/SampleSelfMenuData.asset?fileID=11400000&amp;guid=4c0a6f6ef721cea439f834a9b2ef2e34&amp;type=2#SampleSelfMenuData" class="character_text" style="top: 48px; position: absolute; width: 227px; height: 83px; translate: 956px 0; transform-origin: top;">
         <Bindings>
             <ui:DataBinding property="text" data-source-path="characterTitle" binding-mode="ToTarget"/>
         </Bindings>

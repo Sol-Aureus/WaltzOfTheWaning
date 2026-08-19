@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79969df494216234696ec8db0fd00b79, type: 3}
+  m_Name: SampleStatusAb3
+  m_EditorClassIdentifier: Assembly-CSharp::SampleStatus
+  <AbilityId>k__BackingField: 
+  <cooldownSeconds>k__BackingField: 0
+  <soulCost>k__BackingField: 0
+  <qiThreshold>k__BackingField: 0
+  <cooldownBehaviour>k__BackingField: 0
+  statusEffect: {fileID: 11400000, guid: 886b8cfa8d85c6c4eadae245f4a0cf2f, type: 2}
+  stackCount: 4

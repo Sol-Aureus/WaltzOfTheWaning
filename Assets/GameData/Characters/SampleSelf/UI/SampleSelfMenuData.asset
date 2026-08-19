@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9898409c5babd124c988d696e0e9b392, type: 3}
+  m_Name: SampleSelfMenuData
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterMenuData
+  characterTitle: Sample Self
+  characterOverview: Does self harm
+  characterPortrait: {fileID: 21300000, guid: 293abb3f20c004045b1331e176037466, type: 3}
+  characterKeywords:
+  - Self
+  - Damage
+  - Testing
+  movementData: {fileID: 11400000, guid: 2e21e8ceb56ba474b8a81fcc6c2765ea, type: 2}
+  healthData: {fileID: 11400000, guid: 7a3c5f6382281f84790f4ea47d46946b, type: 2}
+  abilityDescriptionPrimary: {fileID: 11400000, guid: 4fcadf46310c39d41b8edf0e4a5eea50, type: 2}
+  abilityDescriptionAb1: {fileID: 11400000, guid: b3dbbf9e384f77349bc19cf117204d3d, type: 2}
+  abilityDescriptionAb2: {fileID: 11400000, guid: f120314587df9ca4899f04389fb22ecd, type: 2}
+  abilityDescriptionAb3: {fileID: 11400000, guid: 615381ac9d435db4992592999db6ec73, type: 2}
+  abilityDescriptionAb4: {fileID: 11400000, guid: 3ad8f8a428f493141a997b3cd2cf81f8, type: 2}

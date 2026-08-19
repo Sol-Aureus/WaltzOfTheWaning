@@ -18,6 +18,7 @@ public class MenuInitiator : MonoBehaviour
 
     [Header("Character Data")]
     [SerializeField] private CharacterMenuData[] characterData;
+    [SerializeField] private CharacterSelection characterSelection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private async Awaitable Start()
@@ -57,7 +58,7 @@ public class MenuInitiator : MonoBehaviour
             characterModels[i].transform.position = Vector3.zero;
         }
 
-        uiController.SetCharacterData(characterData, characterModels);
+        uiController.SetCharacterData(characterData, characterModels, characterSelection);
         uiController.SetPanelRenderer(panelRenderer);
     }
 }
